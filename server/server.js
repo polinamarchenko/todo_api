@@ -4,8 +4,8 @@ var bodyParser = require('body-parser');
 const {ObjectID} = require('mongodb');
 //local imports
 var {mongoose} = require('./db/mongoose');
-var {Todo} = require('./models/todo');
-var {User} = require('./models/user');
+var {Todo} = require('./models/Todo');
+var {User} = require('./models/User');
 
 var app = express();
 
