@@ -10,10 +10,7 @@ var {User} = require('./models/user');
 var app = express();
 
 //http://www.marcusoft.net/2015/10/eaddrinuse-when-watching-tests-with-mocha-and-supertest.html
-var port = process.env.PORT || (process.argv[2] || 3000);
-port = (typeof port === "number") ? port : 3000;
-
-if(!module.parent){ app.listen(port); }
+var port = process.env.PORT || 3000);
 
 app.use(bodyParser.json());
 
@@ -52,6 +49,9 @@ app.get('/todos/:id', (req, res) => {
   });
 });
 
-console.log(`Application started. Listening on port: ${port}`);
+app.listen(port, () => {
+  console.log(`Application started. Listening on port: ${port}`);
+})
+
 
 module.exports = {app};
