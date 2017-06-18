@@ -10,7 +10,7 @@ var {User} = require('./models/user');
 var app = express();
 
 //http://www.marcusoft.net/2015/10/eaddrinuse-when-watching-tests-with-mocha-and-supertest.html
-var port = process.env.PORT || 3000);
+var port = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 
