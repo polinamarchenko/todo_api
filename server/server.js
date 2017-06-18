@@ -9,6 +9,12 @@ var {User} = require('./models/user');
 
 var app = express();
 
+//http://www.marcusoft.net/2015/10/eaddrinuse-when-watching-tests-with-mocha-and-supertest.html
+var port = process.env.PORT || (process.argv[2] || 3000);
+port = (typeof port === "number") ? port : 3000;
+
+if(!module.parent){ app.listen(port); }
+
 app.use(bodyParser.json());
 
 app.post('/todos', (req, res) => {
@@ -46,12 +52,6 @@ app.get('/todos/:id', (req, res) => {
   });
 });
 
-//http://www.marcusoft.net/2015/10/eaddrinuse-when-watching-tests-with-mocha-and-supertest.html
-var port = process.env.PORT || (process.argv[2] || 3000);
-port = (typeof port === "number") ? port : 3000;
-
-if(!module.parent){ app.listen(port); }
-
-console.log("Application started. Listening on port:" + port);
+console.log(`Application started. Listening on port: ${port}`);
 
 module.exports = {app};
