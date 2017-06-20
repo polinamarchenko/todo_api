@@ -1,16 +1,31 @@
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
 
-var data = {
-  id: 10
-};
+var password = '123abc';
 
-var token = jwt.sign(data, '123abc');
-console.log(token);
+bcrypt.genSalt(10, (err, salt) => {
+  bcrypt.hash(password, salt, (err, hash) => {
+    console.log(hash);
+  });
+});
 
-var decoded = jwt.verify(token, '123abc');
-console.log(decoded);
+var hashedPassword = '$2a$10$KD3tZ..ndRdJvBEPKl78VOdXN/1CVEpZsEE.YAsxikOAKRtrebzsq';
 
+bcrypt.compare('123asd', hashedPassword, (err, result) => {
+  console.log(result);
+});
 
+// var data = {
+//   id: 10
+// };
+//
+// var token = jwt.sign(data, '123abc');
+// console.log(token);
+//
+// var decoded = jwt.verify(token, '123abc');
+// console.log(decoded);
+//
+//
 
 //npm install install crypto-js
 //get access to hashing function
