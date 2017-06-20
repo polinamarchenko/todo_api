@@ -34,7 +34,7 @@ var UserSchema = new mongoose.Schema(
   }
 );
 
-//create instance methods
+//create instance methods (get called with individual documents)
 UserSchema.methods.toJSON = function() {
   var user = this;
   var userObject = user.toObject();
@@ -51,6 +51,28 @@ UserSchema.methods.generateAuthToken = function() {
   return user.save().then(() => {
     return token;
   });
+}
+
+//create model methods (get called with model)
+UserSchema.statics.findByToken = function(token) {
+  var User = this;
+  var decoded;
+
+  try {
+    decoded = jwt.verify(token, 'abc123');
+  } catch(e) {
+    return Promise.reject();
+    // return new Promise((resolve, reject) => {
+    //   reject();
+    // })
+  }
+
+  return User.findOne({
+    _id: decoded._id,
+    'tokens.token': token,
+    'tokens.access': 'auth'
+  });
+
 }
 
 var User = mongoose.model('User', UserSchema);
