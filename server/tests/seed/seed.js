@@ -3,22 +3,6 @@ const {ObjectID} = require('mongodb');
 const {Todo} = require('./../../models/Todo');
 const {User} = require('./../../models/User');
 
-const todos = [{
-  _id: new ObjectID(),
-  text: 'First test todo'
-},{
-  _id: new ObjectID(),
-  text: 'Second test todo',
-  completed: true,
-  completedAt: 333
-}];
-
-const populateTodos = (done) => {
-  Todo.remove({}).then(() => {
-    return Todo.insertMany(todos);
-  }).then(() => done());
-}
-
 const user1Id = new ObjectID();
 const user2Id = new ObjectID();
 
@@ -43,4 +27,24 @@ const populateUsers = (done) => {
     return Promise.all([userOne, userTwo])
   }).then(() => done());
 }
+
+const todos = [{
+  _id: new ObjectID(),
+  text: 'First test todo',
+  _creator: user1Id
+},{
+  _id: new ObjectID(),
+  text: 'Second test todo',
+  completed: true,
+  completedAt: 333,
+  _creator: user2Id
+}];
+
+const populateTodos = (done) => {
+  Todo.remove({}).then(() => {
+    return Todo.insertMany(todos);
+  }).then(() => done());
+}
+
+
 module.exports = {todos, populateTodos, users, populateUsers};
