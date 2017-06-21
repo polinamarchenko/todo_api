@@ -52,7 +52,19 @@ UserSchema.methods.generateAuthToken = function() {
   return user.save().then(() => {
     return token;
   });
-}
+};
+
+UserSchema.methods.removeToken = function(token) {
+  //$pull is mongodb operator let's you remove items from the array that match certain criteria / will remove the entire object from the array
+  var user = this;
+  return user.update({
+    $pull: {
+      tokens: {
+        token: token
+      }
+    }
+  });
+};
 
 //create model methods (get called with model)
 UserSchema.statics.findByToken = function(token) {
