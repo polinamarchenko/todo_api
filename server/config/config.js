@@ -1,10 +1,13 @@
 var env = process.env.NODE_ENV || 'development';
 console.log('env ******', env);
 
-if (env === 'development') {
-  process.env.PORT = 3000;
-  process.env.MONGODB_URI = 'mongodb://localhost:27017/UdemyTodoApp';
-} else if (env === 'test') {
-  process.env.PORT = 3000;
-  process.env.MONGODB_URI = 'mongodb://localhost:27017/UdemyTodoAppTesting';
+if (env === 'development' || env === 'test') {
+  var config = require('./config.json');
+  var envConfig = config[env];
+
+  //Object.keys(envConfig) returns an array of keys PORT and MONGODB_URI
+  //so then we can loop through it
+  Object.keys(envConfig).forEach((key) => {
+    process.env[key] = envConfig[key];
+  })
 }
